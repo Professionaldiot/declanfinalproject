@@ -1,6 +1,7 @@
 package tictactoe
 
 
+import scala.language.implicitConversions
 import scala.swing.*
 
 /*
@@ -13,6 +14,7 @@ DONE: back and forth game play
 DONE: position selection using swing?
 TODO: get a matrix to a seperate frame? idk though
 TODO: playing against a computer
+TODO: remove twos from array when a computer is player 2
 
 using matrices' to hold positions (arrays of arrays of ints)
 numbers represent our player(1 and 2)
@@ -261,8 +263,17 @@ object round :
     else false
   }
 
+def arrayToList[A](a: Array[A]): List[A] = a.toList
+
 @main def main() : Unit = {
-  val k = (for elem <- board.bard yield List(elem => board.bard(elem))).toString
-  println(k.toString)
-  for elem <- board.bard yield List(elem => board.bard(elem).toString)
+  val user = new boardAdder()
+  for (i <- 0 until 3) {
+    for (j <- 0 until 0){
+      user.bored(1,i,j)
+    }
+  }
+  println(user.currentState(board.bard))
+  for (i <- 0 until 3) do
+    board.bard(i).sum
+    println(board.bard(i).sum)
 }
