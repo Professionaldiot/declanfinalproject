@@ -23,6 +23,7 @@ DONE: win detection
 DONE: loss detection
 DONE: remove deprecated methods, traits and vals
 DONE: using word.setLetters fill in the blank letters if they are right
+TODO: add the functionality for checking whether the previous word is the same as the current word
  */
 
 object prev :
@@ -71,11 +72,11 @@ def getNewWord : Vector[newWord] = {
 }
 
 object word :
-  var wrongLetters : ArrayBuffer[Any] = ArrayBuffer[Any]()
-  var wrongString : String = ""
-  var idx = 0
+  private var wrongLetters : ArrayBuffer[Any] = ArrayBuffer[Any]()
+  private var wrongString : String = ""
+  private var idx = 0
   private var wrongLetterNotFound = 0
-  var underscoredWord : String = ""
+  private var underscoredWord : String = ""
   var userArray : ArrayBuffer[Char] = ArrayBuffer[Char]() //including spaces
   var underscoreArray : ArrayBuffer[Char] = ArrayBuffer[Char]()
 
@@ -179,7 +180,6 @@ object open :
   var orElse : Int = 0
 def newText() : Unit = {
   wind.arrayToString
-  println(wind.stringCheck)
   if wind.stringCheck == guess.correctWord then
     println("You did it! you have guessed the correct word")
   if guess.correctWord == game.guessNew then
@@ -187,13 +187,13 @@ def newText() : Unit = {
   else if open.orElse >= 1 then
     run()
   open.orElse += 1
-  if game.round == 10 then
-    println(f"you did not find the word ${guess.correctWord} in 10 rounds")
+  if game.round == game.maxRounds then
+    println(f"you did not find the word ${guess.correctWord} in ${game.round} rounds")
   else
     new Frame() {
       title = "HANGMAN"
       preferredSize = new Dimension(500, 500)
-      contents = new GridPanel(6, 5) {
+      contents = new GridPanel(7, 5) {
         contents += new TextField("Type your guess in the console, use the button to start the check...", 25)
         contents += new TextField(word.underscoreArray.toString().substring(12,word.underscoreArray.length*3 + 10))
         contents += new TextField(word.wrongLettersToString())
@@ -208,6 +208,15 @@ def newText() : Unit = {
                 println(f"You did it! you got the word, ${guess.correctWord}, in ${game.round} rounds!")
               else
                 println("Nope, the input that the computer read, does not match the expected word, try again :)")
+          }
+        }
+        contents += new ToggleButton("Reset...") {
+          reactions += {
+            case event.ButtonClicked(_) =>
+              println("Resetting...")
+              close()
+              word.reset()
+              compOrNot()
           }
         }
         contents += new ToggleButton("Make a guess...") {
@@ -269,6 +278,7 @@ def compOrNot() : Unit = {
 
 object game :
   var round : Int = 0
+  val maxRounds : Int = 15
   var guessNew = ""
 
   def goNext : Int = {

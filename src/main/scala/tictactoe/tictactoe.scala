@@ -11,6 +11,7 @@ DONE: add states for buttons (meaning once you press one you can't press it agai
 DONE: add a quick reset button
 DONE: back and forth game play
 DONE: position selection using swing?
+TODO: get a matrix to a seperate frame? idk though
 
 using matrices' to hold positions (arrays of arrays of ints)
 numbers represent our player(1 and 2)
