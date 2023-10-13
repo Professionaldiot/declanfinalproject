@@ -23,7 +23,7 @@ DONE: win detection
 DONE: loss detection
 DONE: remove deprecated methods, traits and vals
 DONE: using word.setLetters fill in the blank letters if they are right
-TODO: add the functionality for checking whether the previous word is the same as the current word
+DONE: add the functionality for checking whether the previous word is the same as the current word
  */
 
 object prev :
@@ -32,7 +32,7 @@ object prev :
 case class newWord(compWord : String) //using above object make sure we cant select the previous word either, this object could be anywhere
 //i chose to put it above the class class for readability
 
-def getNewWord : Vector[newWord] = {
+def getNewerWord : Vector[newWord] = {
   Vector(
     newWord("hello world"),
     newWord("hangman in scala"),
@@ -250,7 +250,7 @@ def compOrNot() : Unit = {
         reactions += {
           case event.ButtonClicked(_) =>
             close()
-            compLogic(getNewWord(nextInt(getNewWord.size)).compWord)
+            compLogic(getNewerWord(nextInt(getNewerWord.size)).compWord)
             newText()
         }
       }
@@ -307,6 +307,9 @@ object game :
   def compLogic(compWord : String) : Unit = {
     guess.correctWord = compWord
     nextRound
+    if prev.word == guess.correctWord then //so you don't get the same word two times in a row
+      compLogic(getNewerWord(nextInt(getNewerWord.size)).compWord)
+    prev.word = guess.correctWord
   }
 
 def run() : Unit = {
