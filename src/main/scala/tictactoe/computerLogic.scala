@@ -41,5 +41,8 @@ class computerLogic(computerBoard : Array[Array[Int]]) extends hasRow:
   }
   override def rowToReplace(row: Int, urgent : Boolean): Unit = {
     for (elem <- 0 until 3) do
-      println(board.bard(row)(elem))
+      if urgent then
+        if board.bard(row)(elem) != 1 then
+          board.bard(row)(elem) = 2
+          round.nextRound
   }

@@ -25,7 +25,7 @@ def makeArrayV2 = {
 }
 class addToArray {
   val user = new boardAdder()
-  makeArrayV1
+  makeArrayV2
   computerLogic(board.bard).removeTwos()
   computerLogic(row.newBoard).getSum()
   println(row.sums)
