@@ -12,6 +12,7 @@ DONE: add a quick reset button
 DONE: back and forth game play
 DONE: position selection using swing?
 TODO: get a matrix to a seperate frame? idk though
+TODO: playing against a computer
 
 using matrices' to hold positions (arrays of arrays of ints)
 numbers represent our player(1 and 2)
@@ -169,6 +170,7 @@ def newButton() : Unit = {
 
   }
 }
+
 object win :
   def bundle = {
     round.nextRound
@@ -259,6 +261,8 @@ object round :
     else false
   }
 
-def main() : Unit = {
-  newButton()
+@main def main() : Unit = {
+  val k = (for elem <- board.bard yield List(elem => board.bard(elem))).toString
+  println(k.toString)
+  for elem <- board.bard yield List(elem => board.bard(elem).toString)
 }
