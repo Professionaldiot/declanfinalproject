@@ -1,7 +1,5 @@
 package tictactoe
 
-
-import scala.language.implicitConversions
 import scala.swing.*
 
 /*
@@ -263,17 +261,7 @@ object round :
     else false
   }
 
-def arrayToList[A](a: Array[A]): List[A] = a.toList
 
 @main def main() : Unit = {
-  val user = new boardAdder()
-  for (i <- 0 until 3) {
-    for (j <- 0 until 0){
-      user.bored(1,i,j)
-    }
-  }
-  println(user.currentState(board.bard))
-  for (i <- 0 until 3) do
-    board.bard(i).sum
-    println(board.bard(i).sum)
+  addToArray()
 }
