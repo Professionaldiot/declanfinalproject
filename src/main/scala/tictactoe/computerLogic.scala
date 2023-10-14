@@ -74,4 +74,8 @@ class computerLogic(computerBoard : Array[Array[Int]]) extends hasRow:
         if row.isMyTurn then
           board.bard(1)(elem) = 2
           row.isMyTurn = false
+
+      //TODO: add more cases for the rest of the board
+      //TODO: delete the cases in placement logic
+      //TODO: make sure it works
   }
