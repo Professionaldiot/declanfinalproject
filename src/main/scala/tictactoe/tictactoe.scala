@@ -26,8 +26,8 @@ object board :
   var bard : Array[Array[Int]] = Array.ofDim[Int](3,3)
 
 class boardAdder extends boardState {
-  def bored(player : Int, x : Int, y : Int): Unit = {
-    board.bard(x)(y) = player
+  def bored(player : Int, row : Int, colm : Int): Unit = {
+    board.bard(row)(colm) = player
   }
 
   override def currentState(args: Array[Array[Int]]): Unit = {

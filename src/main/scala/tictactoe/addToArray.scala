@@ -18,11 +18,12 @@ def makeArrayV1 = {
 def makeArrayV2 = {
   val user = new boardAdder()
   user.bored(1, 0, 0)
-  user.bored(1, 1, 1)
+  user.bored(1, 2, 1)
   user.bored(2, 0, 1)
   user.bored(1, 2, 2)
   user.bored(2, 2, 0)
   user.bored(1, 0, 2)
+  user.bored(2, 1, 1)
 }
 class addToArray {
   val user = new boardAdder()
