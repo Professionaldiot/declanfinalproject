@@ -3,7 +3,7 @@ package tictactoe
 import scala.swing.*
 
 
-def GUI() : Unit = {
+@main def GUI() : Unit = {
   new Frame() {
     title = "MAIN SCREEN"
     preferredSize = new Dimension(500,500)
@@ -12,7 +12,7 @@ def GUI() : Unit = {
         reactions += {
           case event.ButtonClicked(_) =>
             close()
-            main()
+            amComp()
         }
       }
       contents += new ToggleButton("HANG-MAN") {

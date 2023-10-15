@@ -11,8 +11,8 @@ DONE: add a quick reset button
 DONE: back and forth game play
 DONE: position selection using swing?
 TODO: get a matrix to a seperate frame? idk though
-TODO: playing against a computer
-TODO: remove twos from array when a computer is player 2
+DONE: playing against a computer
+DONE: remove twos from array when a computer is player 2
 
 using matrices' to hold positions (arrays of arrays of ints)
 numbers represent our player(1 and 2)
@@ -171,6 +171,33 @@ def newButton() : Unit = {
   }
 }
 
+def amComp() : Unit = {
+  new Frame {
+    title = "Computer or player"
+    preferredSize = new Dimension(500,500)
+    contents = new GridPanel(3,3) {
+      contents += new ToggleButton("Against Computer") {
+        reactions += {
+          case event.ButtonClicked(_) =>
+            close()
+            round.againstComputer = true
+            newButton()
+        }
+      }
+      contents += new ToggleButton("Against another player") {
+        reactions += {
+          case event.ButtonClicked(_) =>
+            close()
+            newButton()
+        }
+      }
+    }
+    pack()
+    centerOnScreen()
+    open()
+  }
+}
+
 object win :
   def bundle = {
     round.nextRound
@@ -241,15 +268,21 @@ object round :
   var player : Int = 1
   var roundNum : Int = 0
   var tieCounter : Int = 0
+  var againstComputer = false
   def nextRound = {
-    if player == 1 then
+    if againstComputer then
       roundNum += 1
-      player = 2
-    else if player == 2 then
-      roundNum += 1
-      player = 1
-    else
-      player = 1
+      row.isMyTurn = true
+      addToArray()
+    else if !againstComputer then
+      if player == 1 then
+        roundNum += 1
+        player = 2
+      else if player == 2 then
+        roundNum += 1
+        player = 1
+      else
+        player = 1
   }
   def check(player : Int) : Int = {
     this.player
@@ -262,6 +295,6 @@ object round :
   }
 
 
-@main def main() : Unit = {
+def main() : Unit = {
   addToArray()
 }
