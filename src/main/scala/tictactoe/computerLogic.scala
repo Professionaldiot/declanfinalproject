@@ -11,7 +11,7 @@ object row:
   var isMyTurn : Boolean = false
   val possibleRows : ArrayBuffer[Any] = ArrayBuffer[Any]()
   var num : Int = 0
-  val sums: ArrayBuffer[Int] = ArrayBuffer[Int]()
+  var sums: ArrayBuffer[Int] = ArrayBuffer[Int]()
   val newBoard : Array[Array[Int]] = Array.ofDim[Int](3,3)
 
 class computerLogic(computerBoard : Array[Array[Int]]) extends hasRow:
@@ -24,6 +24,7 @@ class computerLogic(computerBoard : Array[Array[Int]]) extends hasRow:
     }
   }
   def getSum() : Unit = {
+    row.sums = ArrayBuffer[Int]()
     for (i <- 0 until 3) do
       val j = computerBoard(i).sum
       row.sums += j
@@ -35,7 +36,8 @@ class computerLogic(computerBoard : Array[Array[Int]]) extends hasRow:
       val colm = nextInt(3)
       if board.bard(row)(colm) != 1 && board.bard(row)(colm) != 2 then
         board.bard(row)(colm) = 2
-      end if
+      else if board.bard(row)(colm) == 1 || board.bard(row)(colm) == 2 then
+        placementLogic()
     else
       row.isMyTurn = true
       for (elem <- 0 until 3) do

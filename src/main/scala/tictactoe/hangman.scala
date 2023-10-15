@@ -10,9 +10,6 @@ import scala.swing.*
 import scala.util.Random.*
 import scala.util.control.Breaks.*
 
-
-
-
 /*
 DONE: add a button GUI for user vs computer or another user
 DONE: add GUI for main screen to avoid a lot of console inputs
