@@ -115,4 +115,5 @@ class computerLogic(computerBoard : Array[Array[Int]]) extends hasRow:
                 }
               }
             }
+            //TODO: BUG: when player 1 plays on the left or right side, player 2 plays the rest of the board
   }
