@@ -16,12 +16,22 @@ class addToArray {
   computerLogic(row.newBoard).placementLogic()//place a 2 somewhere
   println(user.currentState(board.bard))
   println(user.currentState(row.newBoard))
+
+  computerLogic(board.bard).removeTwos()
+  computerLogic(row.newBoard).getSum()
+  user.currentState(row.newBoard)
   */
+
+  private val user = new boardAdder
   row.isMyTurn = true
-  row.sums += 11
-  row.sums += 6
   row.sums += 0
+  row.sums += 10
+  row.sums += 2
+  user.currentState(board.bard)
   computerLogic(board.bard).findPlacement()
+  user.currentState(board.bard)
+  //computerLogic(board.bard).numExists(List(7,0))
+  //computerLogic(board.bard).numExists(List(6,0))
 }
 
 @main def help() : Unit = {

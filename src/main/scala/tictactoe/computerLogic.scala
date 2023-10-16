@@ -24,6 +24,7 @@ class computerLogic(computerBoard : Array[Array[Int]]) extends hasRow:
       }
     }
   }
+
   def getSum() : Unit = {
     row.sums = ArrayBuffer[Int]()
     for (i <- 0 until 3) do
@@ -46,40 +47,128 @@ class computerLogic(computerBoard : Array[Array[Int]]) extends hasRow:
       if row.isMyTurn then rowToReplace(1)
       if row.isMyTurn then rowToReplace(2)
   }
-  def numExists(numsToCheck : List[Int]) : Unit = {
-    row.doesExist = false
+  private def numExists(numsToCheck : List[Int]) : ListBuffer[Boolean] = {
+    val boolList = ListBuffer[Boolean]()
     for elem <- numsToCheck do
       if elem == row.sums(0) || elem == row.sums(1) || elem == row.sums(2) then
-        row.doesExist = true
+        boolList += true
+      else boolList += false
+    boolList
+  }
+
+  private def allTrue(boolsToCheck : ListBuffer[Boolean]) : Boolean = {
+    if boolsToCheck.contains(false) then false
+    else true
+  }
+
+  private def emptyRow : Int = {
+    var rowToRep = -1
+    for (elem <- 0 until 3) {
+      if (row.sums(elem) >= 0 && row.sums(elem) <= 6) || (row.sums(elem) >= 8 && row.sums(elem) <= 10) then
+        rowToRep = elem
+    }
+    rowToRep
+  }
+  private def whichRow(numToFind : Int) : Int = {
+    var rowHasNum = -1
+    for (elem <- 0 until 3) {
+      if numToFind == row.sums(elem) then
+        rowHasNum = elem
+    }
+    rowHasNum
   }
   override def findPlacement(): Unit ={
     //TODO: convert rowToReplace to match cases
     //cases = 11,10,7,5,2,1,_
-    val colm = 0
     for elem <- row.sums do
-      if row.isMyTurn then
-        println(elem)
-        elem match
-          case 11 =>
-            //check if another row is full somewhere xor insert in a non-empty row
-            numExists(List(7))
-            if row.doesExist then
-              println("hi")
-          case 10 =>
-            println() //check if another row has two 1's in it, and place it there, otherwise place it in the row
-          case 7 =>
-            //check if another row is full somewhere xor insert in a non-empty row
-
-          case 5 =>
+      println(elem)
+      elem match
+        case 11 =>
+          if row.isMyTurn then
+          //check if another row is full somewhere or insert in a non-empty row
+            if !allTrue(numExists(List(7,0))) then
+              board.bard(emptyRow)(nextInt(3)) = 2
+              row.isMyTurn = false
+            if allTrue(numExists(List(7,0))) then //this is where there are two full rows above it
+              if emptyRow == 2 then //if the empty row is the last one, do some logic for vertical checking
+                for (colm <- 0 until 3) {
+                  if board.bard(2)(colm) == 0 then //only checks verticals if the current space is 0
+                    if board.bard(0)(colm) == 1 && board.bard(1)(colm) == 1 then
+                      if row.isMyTurn then
+                        board.bard(2)(colm) = 2 //if there is 2 ones above it, place one below them
+                        row.isMyTurn = false
+                    else if board.bard(0)(colm) == 2 && board.bard(1)(colm) == 2 then
+                      if row.isMyTurn then
+                        board.bard(2)(colm) = 2 //if we don't find two 1's but instead two 2's, place it below those
+                        row.isMyTurn = false
+                  if colm == 2 then //if we reach the end of the row and do not fill either one, we place at the first 0 we see
+                    for (j <- 0 until 3) {
+                      if row.isMyTurn then
+                        if board.bard(2)(j) == 0 then
+                          board.bard(2)(j) = 2
+                          row.isMyTurn = false
+                      }
+                }
+        case 10 =>
+          if row.isMyTurn then
+            //check if another row has two 1's in it, and place it there, otherwise place it in the row
+            if allTrue(numExists(List(2))) then
+              for (colm <- 0 until 3) {//place it in the row that has 2 ones
+                if board.bard(whichRow(2))(colm) == 0 then
+                  if row.isMyTurn then
+                    board.bard(whichRow(2))(colm) = 2
+                    row.isMyTurn = false
+              }
+            else //place it in the row with two 2's
+              for (colm <- 0 until 3) {
+                if board.bard(whichRow(10))(colm) == 0 then
+                  if row.isMyTurn then
+                    board.bard(whichRow(10))(colm) = 2
+                    row.isMyTurn = false
+              }
+        case 7 =>
+          if row.isMyTurn then
+            println()
+            //check if another row is full somewhere and/or insert in a non-empty row, same logic as when elem is 11
+        case 5 =>
+          if row.isMyTurn then
             println() //if not first row, check for vertical wins non-dynamically, if there none, place a 2 next to the other 2
-          case 2 =>
-            println() //replace with no checks
-          case 1 =>
-            println() //check vertical
-          case _ =>
-            println("not hi") //place at first 0 we see
+        case 2 =>
+          if row.isMyTurn then
+            //replace with no checks
+            for (colm <- 0 until 3) {
+              if board.bard(whichRow(2))(colm) == 0 then
+                if row.isMyTurn then
+                  board.bard(whichRow(2))(colm) = 2
+                  row.isMyTurn = false
+            }
+        case 1 =>
+          if row.isMyTurn then
+            if whichRow(1) == 3 then
+              for (colm <- 0 until 3) {
+                if board.bard(1)(colm) == 1 && board.bard(0)(colm) == 1 then
+                  if row.isMyTurn then
+                    board.bard(2)(colm) = 2
+                    row.isMyTurn = false
+                else if board.bard(1)(colm) == 2 && board.bard(0)(colm) == 2 then
+                    if row.isMyTurn then
+                      board.bard(2)(colm) == 2
+                      row.isMyTurn = false
+              }
+        case 0 =>
+          println() //do nothing, just need to explicitly state it so that it doesn't start filling it by accident
+        case _ =>
+          if row.isMyTurn then
+            for (rou <- 0 until 3) {
+              for (colm <- 0 until 3) {
+                if row.isMyTurn then
+                  if board.bard(rou)(colm) == 0 then
+                    board.bard(rou)(colm) = 2
+                    row.isMyTurn = false
+              }
+            }
   }
-  def rowToReplace(rower: Int): Unit = {
+  private def rowToReplace(rower: Int): Unit = {
     for (elem <- 0 until 2) do
       if row.isMyTurn then
         if row.sums(elem) == 0 then
