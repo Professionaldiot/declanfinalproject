@@ -32,8 +32,6 @@ class computerLogic(computerBoard : Array[Array[Int]]) extends hasRow:
   }
 
   def placementLogic() : Unit = {
-    println()
-    println(round.roundNum)
     if round.roundNum == 2 || round.roundNum == 4 then
       if row.isMyTurn then
         val rower = nextInt(3)
