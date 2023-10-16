@@ -1,5 +1,6 @@
 package tictactoe
 
+import scala.language.postfixOps
 import scala.swing.*
 
 /*
@@ -39,20 +40,70 @@ class boardAdder extends boardState {
     }
   }
 }
+//TODO: make the x's and o's
+object ourBoard:
+  val hoard: Array[Array[Char]] = Array.ofDim[Char](3, 3)
+
+def theBirdsAndBees() : Unit = {
+  for (row <- 0 until 3) {
+    for (colm <- 0 until 3) {
+      if board.bard(row)(colm) != 0 then
+        if board.bard(row)(colm) == 1 then ourBoard.hoard(row)(colm) = 'X'
+        if board.bard(row)(colm) == 2 then ourBoard.hoard(row)(colm) = 'O'
+    }
+  }
+}
+
+def makeStringFromArrayAny(row : Int): Array[Array[Char]] = {
+  for (i <- 0 until 3) {
+    print(ourBoard.hoard(row)(i).toString + " " )
+  }
+  ourBoard.hoard
+}
+
+def newMatrix() : Unit = {
+  new Frame() {
+    title = "TIC-TAC-TOE board"
+    preferredSize = new Dimension(300,300)
+    contents = new GridPanel(3,3) {
+      contents += new TextArea(f"${ourBoard.hoard(0).mkString(" | ")}")
+      contents += new TextArea(f"${ourBoard.hoard(1).mkString(" | ")}")
+      contents += new TextArea(f"${ourBoard.hoard(2).mkString(" | ")}")
+    }
+    pack()
+    centerOnScreen()
+    open()
+  }
+}
 
 def newButton() : Unit = {
+  //theBirdsAndBees()
   val player = new boardAdder()
+  if round.againstComputer then
+    round.roundNum += 1
+    row.isMyTurn = true
+    addToArray()
+  theBirdsAndBees()
   new Frame() {
     title = "TIC-TAC-TOE"
     preferredSize = new Dimension(500,500)
-    contents = new GridPanel(5,5) {
+    contents = new GridPanel(8,5) {
       contents += new Label("Tic")
       contents += new Label("Tac")
       contents += new Label("Toe")
-
+      contents += new TextArea(f"     ${ourBoard.hoard(0)(0).toString} | ")
+      contents += new TextArea(f"     ${ourBoard.hoard(0)(1).toString} | ")
+      contents += new TextArea(f"     ${ourBoard.hoard(0)(2).toString} | ")
+      contents += new TextArea(f"     ${ourBoard.hoard(1)(0).toString} | ")
+      contents += new TextArea(f"     ${ourBoard.hoard(1)(1).toString} | ")
+      contents += new TextArea(f"     ${ourBoard.hoard(1)(2).toString} | ")
+      contents += new TextArea(f"     ${ourBoard.hoard(2)(0).toString} | ")
+      contents += new TextArea(f"     ${ourBoard.hoard(2)(1).toString} | ")
+      contents += new TextArea(f"     ${ourBoard.hoard(2)(2).toString} | ")
       contents += new ToggleButton("1") {
         reactions += {
           case event.ButtonClicked(enabled_) =>
+            close()
             player.bored(round.player, 0, 0)
             player.currentState(board.bard)
             win.bundle
@@ -63,6 +114,7 @@ def newButton() : Unit = {
       contents += new ToggleButton("4") {
         reactions += {
           case event.ButtonClicked(enabled_) =>
+            close()
             player.bored(round.player, 0,1)
             player.currentState(board.bard)
             win.bundle
@@ -73,6 +125,7 @@ def newButton() : Unit = {
       contents += new ToggleButton("7") {
         reactions += {
           case event.ButtonClicked(enabled_) =>
+            close()
             player.bored(round.player, 0,2)
             player.currentState(board.bard)
             win.bundle
@@ -83,6 +136,7 @@ def newButton() : Unit = {
       contents += new ToggleButton("2") {
         reactions += {
           case event.ButtonClicked(enabled_) =>
+            close()
             player.bored(round.player, 1, 0)
             player.currentState(board.bard)
             win.bundle
@@ -93,6 +147,7 @@ def newButton() : Unit = {
       contents += new ToggleButton("5") {
         reactions += {
           case event.ButtonClicked(enabled_) =>
+            close()
             player.bored(round.player, 1, 1)
             player.currentState(board.bard)
             win.bundle
@@ -103,6 +158,7 @@ def newButton() : Unit = {
       contents += new ToggleButton("8") {
         reactions += {
           case event.ButtonClicked(enabled_) =>
+            close()
             player.bored(round.player, 1,2)
             player.currentState(board.bard)
             win.bundle
@@ -113,6 +169,7 @@ def newButton() : Unit = {
       contents += new ToggleButton("3") {
         reactions += {
           case event.ButtonClicked(enabled_) =>
+            close()
             player.bored(round.player, 2, 0)
             player.currentState(board.bard)
             win.bundle
@@ -123,6 +180,7 @@ def newButton() : Unit = {
       contents += new ToggleButton("6") {
         reactions += {
           case event.ButtonClicked(enabled_) =>
+            close()
             player.bored(round.player, 2,1)
             player.currentState(board.bard)
             win.bundle
@@ -133,6 +191,7 @@ def newButton() : Unit = {
       contents += new ToggleButton("9") {
         reactions += {
           case event.ButtonClicked(enabled_) =>
+            close()
             player.bored(round.player, 2, 2)
             player.currentState(board.bard)
             win.bundle
@@ -167,7 +226,6 @@ def newButton() : Unit = {
     pack()
     centerOnScreen()
     open()
-
   }
 }
 
@@ -270,6 +328,7 @@ object round :
   var tieCounter : Int = 0
   var againstComputer = false
   def nextRound = {
+    newButton()
     if againstComputer then
       roundNum += 1
       row.isMyTurn = true
@@ -296,5 +355,5 @@ object round :
 
 
 def main() : Unit = {
-  addToArray()
+  newButton()
 }
