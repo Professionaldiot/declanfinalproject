@@ -40,7 +40,7 @@ class boardAdder extends boardState {
     }
   }
 }
-//TODO: make the x's and o's
+//DONEa: make the x's and o's
 object ourBoard:
   val hoard: Array[Array[Char]] = Array.ofDim[Char](3, 3)
 
@@ -61,23 +61,8 @@ def makeStringFromArrayAny(row : Int): Array[Array[Char]] = {
   ourBoard.hoard
 }
 
-def newMatrix() : Unit = {
-  new Frame() {
-    title = "TIC-TAC-TOE board"
-    preferredSize = new Dimension(300,300)
-    contents = new GridPanel(3,3) {
-      contents += new TextArea(f"${ourBoard.hoard(0).mkString(" | ")}")
-      contents += new TextArea(f"${ourBoard.hoard(1).mkString(" | ")}")
-      contents += new TextArea(f"${ourBoard.hoard(2).mkString(" | ")}")
-    }
-    pack()
-    centerOnScreen()
-    open()
-  }
-}
 
 def newButton() : Unit = {
-  //theBirdsAndBees()
   val player = new boardAdder()
   if round.againstComputer then
     round.roundNum += 1
