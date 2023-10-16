@@ -66,7 +66,6 @@ def newButton() : Unit = {
   val player = new boardAdder()
   if round.againstComputer then
     round.roundNum += 1
-    row.isMyTurn = true
     addToArray()
   theBirdsAndBees()
   new Frame() {
@@ -76,15 +75,15 @@ def newButton() : Unit = {
       contents += new Label("Tic")
       contents += new Label("Tac")
       contents += new Label("Toe")
-      contents += new TextArea(f"     ${ourBoard.hoard(0)(0).toString} | ")
-      contents += new TextArea(f"     ${ourBoard.hoard(0)(1).toString} | ")
-      contents += new TextArea(f"     ${ourBoard.hoard(0)(2).toString} | ")
-      contents += new TextArea(f"     ${ourBoard.hoard(1)(0).toString} | ")
-      contents += new TextArea(f"     ${ourBoard.hoard(1)(1).toString} | ")
-      contents += new TextArea(f"     ${ourBoard.hoard(1)(2).toString} | ")
-      contents += new TextArea(f"     ${ourBoard.hoard(2)(0).toString} | ")
-      contents += new TextArea(f"     ${ourBoard.hoard(2)(1).toString} | ")
-      contents += new TextArea(f"     ${ourBoard.hoard(2)(2).toString} | ")
+      contents += new TextArea(f"\u0009${ourBoard.hoard(0)(0).toString} | ")
+      contents += new TextArea(f"\u0009${ourBoard.hoard(0)(1).toString} | ")
+      contents += new TextArea(f"\u0009${ourBoard.hoard(0)(2).toString} | ")
+      contents += new TextArea(f"\u0009${ourBoard.hoard(1)(0).toString} | ")
+      contents += new TextArea(f"\u0009${ourBoard.hoard(1)(1).toString} | ")
+      contents += new TextArea(f"\u0009${ourBoard.hoard(1)(2).toString} | ")
+      contents += new TextArea(f"\u0009${ourBoard.hoard(2)(0).toString} | ")
+      contents += new TextArea(f"\u0009${ourBoard.hoard(2)(1).toString} | ")
+      contents += new TextArea(f"\u0009${ourBoard.hoard(2)(2).toString} | ")
       contents += new ToggleButton("1") {
         reactions += {
           case event.ButtonClicked(enabled_) =>
@@ -193,6 +192,7 @@ def newButton() : Unit = {
                 board.bard(i)(j) = 0
               }
             }
+            row.newBoard = Array.ofDim[Int](3,3)
             ourBoard.hoard = Array.ofDim[Char](3, 3)
             round.player = 1
             round.tieCounter = 0
@@ -244,11 +244,13 @@ def amComp() : Unit = {
 
 object win :
   def bundle = {
+    //theBirdsAndBees()
     round.nextRound
     winner.horiz(board.bard)
     winner.vertical(board.bard)
     winner.diagonal(board.bard)
-    if round.tieChecker then println("There is a tie, no one won.")
+    if !round.againstComputer then
+      if round.tieChecker then println("There is a tie, no one won.")
   }
 
 object winner :
@@ -265,14 +267,15 @@ object winner :
             println()
             round.nextRound
             println("player " + round.player + " has won")
-          if round.roundNum == 9 then
-            if !round.againstComputer then
+          if !round.againstComputer then
+            if round.roundNum == 9 then
               if !(board(i)(j) == board(i)(j-2) && board(i)(j) == board(i)(j-1)) then
                 round.tieCounter += 1
-            else if round.againstComputer then
-              if round.roundNum >= 16 then
-                if !(board(i)(j) == board(i)(j - 2) && board(i)(j) == board(i)(j - 1)) then
-                  round.tieCounter += 1
+            end if
+          else if round.againstComputer then
+            if round.roundNum >= 12 then
+              if !(board(i)(j) == board(i)(j - 2) && board(i)(j) == board(i)(j - 1)) then
+                round.tieCounter += 1
       }
     }
   }
@@ -287,14 +290,15 @@ object winner :
           round.nextRound
           println(board(i)(j) + " ")
           println("player " + round.player + " has won")
-        if round.roundNum == 9 then
-          if !round.againstComputer then
+        if !round.againstComputer then
+          if round.roundNum == 9 then
             if !(board(i)(j) == board(i + 2)(j) && board(i)(j) == board(i + 1)(j)) then
               round.tieCounter += 1
-          else if round.againstComputer then
-              if round.roundNum >= 16 then
-                if !(board(i)(j) == board(i + 2)(j) && board(i)(j) == board(i + 1)(j)) then
-                  round.tieCounter += 1
+          end if
+        else if round.againstComputer then
+            if round.roundNum >= 12 then
+              if !(board(i)(j) == board(i + 2)(j) && board(i)(j) == board(i + 1)(j)) then
+                round.tieCounter += 1
       }
     }
   }
@@ -313,14 +317,15 @@ object winner :
         println()
         round.nextRound
         println("player " + round.player + " has won")
-    if round.roundNum == 9 then
-      if !round.againstComputer then
+    if !round.againstComputer then
+      if round.roundNum == 9 then
         if !(board(0)(0) == board(1)(1) && board(0)(0) == board(2)(2)) || !(board(0)(2) == board(1)(1) && board(0)(2) == board(2)(0)) then
           round.tieCounter += 1
-      else if round.againstComputer then
-          if round.roundNum >= 16 then
-            if !(board(0)(0) == board(1)(1) && board(0)(0) == board(2)(2)) || !(board(0)(2) == board(1)(1) && board(0)(2) == board(2)(0)) then
-              round.tieCounter += 1
+      end if
+    else if round.againstComputer then
+        if round.roundNum >= 12 then
+          if !(board(0)(0) == board(1)(1) && board(0)(0) == board(2)(2)) || !(board(0)(2) == board(1)(1) && board(0)(2) == board(2)(0)) then
+            round.tieCounter += 1
   }
 
 object round :
@@ -329,11 +334,12 @@ object round :
   var tieCounter : Int = 0
   var againstComputer = false
   def nextRound = {
-    newButton()
     if againstComputer then
       roundNum += 1
       row.isMyTurn = true
       addToArray()
+      theBirdsAndBees()
+      newButton()
     else if !againstComputer then
       if player == 1 then
         roundNum += 1

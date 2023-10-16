@@ -8,6 +8,7 @@ the point of this algorithm is not to win, it's to be a nuisance, trying to cons
  */
 
 class addToArray {
+  /*
   val user = new boardAdder()
   computerLogic(board.bard).removeTwos() //automatically clones the current board to row.newBoard
   computerLogic(row.newBoard).getSum() //gets the sum of the board
@@ -15,6 +16,14 @@ class addToArray {
   computerLogic(row.newBoard).placementLogic()//place a 2 somewhere
   println(user.currentState(board.bard))
   println(user.currentState(row.newBoard))
+  */
+  row.isMyTurn = true
+  row.sums += 11
+  row.sums += 6
+  row.sums += 0
+  computerLogic(board.bard).findPlacement()
+}
 
-
+@main def help() : Unit = {
+  addToArray()
 }
