@@ -50,7 +50,10 @@ class computerLogic(computerBoard : Array[Array[Int]]) extends hasRow:
                 if (row.sums(elem-1) == 7 || row.sums(elem-1) == 11) && (row.sums(elem+1) == 7 || row.sums(elem+1) == 11) then
                   board.bard(1)(1) = 2
                   row.isMyTurn = false
-              end if
+            else if board.bard(rower)(elem) != 1 && board.bard(rower)(elem) != 2 then
+                  board.bard(rower)(elem) = 2
+                  row.isMyTurn = false
+            end if
           else if elem == 3 then //check if both rows above it are full
               if (row.sums(elem-1) == 7 || row.sums(elem-1) == 11) && (row.sums(elem-2) == 7 || row.sums(elem-2) == 11) then
                 board.bard(rower)(1) = 2//will only happen if both rows are full
@@ -96,5 +99,5 @@ class computerLogic(computerBoard : Array[Array[Int]]) extends hasRow:
                   board.bard(i)(j) = 2
                 }
               }
-              //TODO: BUG: when player 1 plays on the left or right side, player 2 plays the rest of the board
+              //FIXED BUG: when player 1 plays on the left or right side, player 2 plays the rest of the board
   }

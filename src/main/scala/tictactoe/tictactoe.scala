@@ -11,7 +11,7 @@ DONE: add states for buttons (meaning once you press one you can't press it agai
 DONE: add a quick reset button
 DONE: back and forth game play
 DONE: position selection using swing?
-TODO: get a matrix to a seperate frame? idk though
+DONE: we now have board visible for the player on the Frame
 DONE: playing against a computer
 DONE: remove twos from array when a computer is player 2
 
@@ -42,7 +42,7 @@ class boardAdder extends boardState {
 }
 //DONEa: make the x's and o's
 object ourBoard:
-  val hoard: Array[Array[Char]] = Array.ofDim[Char](3, 3)
+  var hoard: Array[Array[Char]] = Array.ofDim[Char](3, 3)
 
 def theBirdsAndBees() : Unit = {
   for (row <- 0 until 3) {
@@ -193,6 +193,7 @@ def newButton() : Unit = {
                 board.bard(i)(j) = 0
               }
             }
+            ourBoard.hoard = Array.ofDim[Char](3, 3)
             round.player = 1
             round.tieCounter = 0
             round.roundNum = 0
@@ -265,8 +266,13 @@ object winner :
             round.nextRound
             println("player " + round.player + " has won")
           if round.roundNum == 9 then
-            if !(board(i)(j) == board(i)(j-2) && board(i)(j) == board(i)(j-1)) then
-              round.tieCounter += 1
+            if !round.againstComputer then
+              if !(board(i)(j) == board(i)(j-2) && board(i)(j) == board(i)(j-1)) then
+                round.tieCounter += 1
+            else if round.againstComputer then
+              if round.roundNum >= 16 then
+                if !(board(i)(j) == board(i)(j - 2) && board(i)(j) == board(i)(j - 1)) then
+                  round.tieCounter += 1
       }
     }
   }
@@ -276,14 +282,19 @@ object winner :
       for (j <- 0 until 3) {
         if board(i)(j) == 0 then
           print(" ")
-        else if board(i)(j) == board(i+2)(j) && board(i)(j) == board(i+1)(j) then
+        else if board(i)(j) == board(i + 2)(j) && board(i)(j) == board(i + 1)(j) then
           println()
           round.nextRound
           println(board(i)(j) + " ")
           println("player " + round.player + " has won")
         if round.roundNum == 9 then
-          if !(board(i)(j) == board(i + 2)(j) && board(i)(j) == board(i + 1)(j)) then
-            round.tieCounter += 1
+          if !round.againstComputer then
+            if !(board(i)(j) == board(i + 2)(j) && board(i)(j) == board(i + 1)(j)) then
+              round.tieCounter += 1
+          else if round.againstComputer then
+              if round.roundNum >= 16 then
+                if !(board(i)(j) == board(i + 2)(j) && board(i)(j) == board(i + 1)(j)) then
+                  round.tieCounter += 1
       }
     }
   }
@@ -303,8 +314,13 @@ object winner :
         round.nextRound
         println("player " + round.player + " has won")
     if round.roundNum == 9 then
-      if !(board(0)(0) == board(1)(1) && board(0)(0) == board(2)(2)) || !(board(0)(2) == board(1)(1) && board(0)(2) == board(2)(0)) then
-        round.tieCounter += 1
+      if !round.againstComputer then
+        if !(board(0)(0) == board(1)(1) && board(0)(0) == board(2)(2)) || !(board(0)(2) == board(1)(1) && board(0)(2) == board(2)(0)) then
+          round.tieCounter += 1
+      else if round.againstComputer then
+          if round.roundNum >= 16 then
+            if !(board(0)(0) == board(1)(1) && board(0)(0) == board(2)(2)) || !(board(0)(2) == board(1)(1) && board(0)(2) == board(2)(0)) then
+              round.tieCounter += 1
   }
 
 object round :
