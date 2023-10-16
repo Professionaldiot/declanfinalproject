@@ -2,7 +2,7 @@ package tictactoe
 
 import scala.swing.*
 
-def GUI() : Unit = {
+@main def GUI() : Unit = {
   new Frame() {
     title = "MAIN SCREEN"
     preferredSize = new Dimension(500,500)

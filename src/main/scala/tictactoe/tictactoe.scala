@@ -75,15 +75,8 @@ def newButton() : Unit = {
       contents += new Label("Tic")
       contents += new Label("Tac")
       contents += new Label("Toe")
-      contents += new TextArea(f"\u0009${ourBoard.hoard(0)(0).toString} | ")
-      contents += new TextArea(f"\u0009${ourBoard.hoard(0)(1).toString} | ")
-      contents += new TextArea(f"\u0009${ourBoard.hoard(0)(2).toString} | ")
-      contents += new TextArea(f"\u0009${ourBoard.hoard(1)(0).toString} | ")
-      contents += new TextArea(f"\u0009${ourBoard.hoard(1)(1).toString} | ")
-      contents += new TextArea(f"\u0009${ourBoard.hoard(1)(2).toString} | ")
-      contents += new TextArea(f"\u0009${ourBoard.hoard(2)(0).toString} | ")
-      contents += new TextArea(f"\u0009${ourBoard.hoard(2)(1).toString} | ")
-      contents += new TextArea(f"\u0009${ourBoard.hoard(2)(2).toString} | ")
+      for (i <- 0 until 3) {for (j <- 0 until 3) {contents += new TextArea(f"\u0009${ourBoard.hoard(i)(j).toString} | ")}}
+
       contents += new ToggleButton("1") {
         reactions += {
           case event.ButtonClicked(enabled_) =>
@@ -244,7 +237,6 @@ def amComp() : Unit = {
 
 object win :
   def bundle = {
-    //theBirdsAndBees()
     round.nextRound
     winner.horiz(board.bard)
     winner.vertical(board.bard)
@@ -265,7 +257,8 @@ object winner :
             print(" ")
           else if board(i)(j) == board(i)(j-2) && board(i)(j) == board(i)(j-1) then
             println()
-            round.nextRound
+            if !round.againstComputer then
+              round.nextRound
             println("player " + round.player + " has won")
           if !round.againstComputer then
             if round.roundNum == 9 then
@@ -273,7 +266,7 @@ object winner :
                 round.tieCounter += 1
             end if
           else if round.againstComputer then
-            if round.roundNum >= 12 then
+            if round.roundNum >= 10 then
               if !(board(i)(j) == board(i)(j - 2) && board(i)(j) == board(i)(j - 1)) then
                 round.tieCounter += 1
       }
@@ -287,7 +280,8 @@ object winner :
           print(" ")
         else if board(i)(j) == board(i + 2)(j) && board(i)(j) == board(i + 1)(j) then
           println()
-          round.nextRound
+          if !round.againstComputer then
+            round.nextRound
           println(board(i)(j) + " ")
           println("player " + round.player + " has won")
         if !round.againstComputer then
@@ -296,7 +290,7 @@ object winner :
               round.tieCounter += 1
           end if
         else if round.againstComputer then
-            if round.roundNum >= 12 then
+            if round.roundNum >= 10 then
               if !(board(i)(j) == board(i + 2)(j) && board(i)(j) == board(i + 1)(j)) then
                 round.tieCounter += 1
       }
@@ -308,14 +302,16 @@ object winner :
         print(" ")
       else
         println()
-        round.nextRound
+        if !round.againstComputer then
+          round.nextRound
         println("player " + round.player + " has won")
     else if board(0)(2) == board(1)(1) && board(0)(2) == board(2)(0) then
       if board(0)(2) == 0 then
         print(" ")
       else
         println()
-        round.nextRound
+        if !round.againstComputer then
+          round.nextRound
         println("player " + round.player + " has won")
     if !round.againstComputer then
       if round.roundNum == 9 then
@@ -323,7 +319,7 @@ object winner :
           round.tieCounter += 1
       end if
     else if round.againstComputer then
-        if round.roundNum >= 12 then
+        if round.roundNum >= 10 then
           if !(board(0)(0) == board(1)(1) && board(0)(0) == board(2)(2)) || !(board(0)(2) == board(1)(1) && board(0)(2) == board(2)(0)) then
             round.tieCounter += 1
   }
@@ -362,5 +358,5 @@ object round :
 
 
 def main() : Unit = {
-  newButton()
+  amComp()
 }
