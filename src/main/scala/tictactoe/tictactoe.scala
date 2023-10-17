@@ -61,7 +61,6 @@ def makeStringFromArrayAny(row : Int): Array[Array[Char]] = {
   ourBoard.hoard
 }
 
-
 def newButton() : Unit = {
   val player = new boardAdder()
   if round.againstComputer then

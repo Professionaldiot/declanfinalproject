@@ -24,7 +24,7 @@ An exploration of Scala, through the programming of tic-tac-toe and hangman.
   * There is automatic tie and win detection! You don't need to do anything, just play the game and it will work automatically.
   * Should it not tell you who won (or tied), also try to tell me, and I can attempt to figure out why.
   * The song I am listening to as  I write this is : [**_<u>this song!</u>_**](https://music.youtube.com/watch?v=RPRTJSb4Uc4&si=5R-3u1hVdbEEYwK)
-  * Here is a picture of my dogs :)
+  * Here is a picture of my dogs :) [**_<u>for those of you that can't see the image</u>_**](https://photos.app.goo.gl/wd7ZvP7ciZn8TZpZ7)
 
     <img alt="all 3 of my dogs in a car" height="500" src="C:\Users\Declan\Downloads\PXL_20230615_142146890.jpg" title="Doggies :)"/>
 
