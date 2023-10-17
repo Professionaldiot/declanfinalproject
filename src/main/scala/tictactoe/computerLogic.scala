@@ -32,7 +32,7 @@ class computerLogic(computerBoard : Array[Array[Int]]) extends hasRow:
   }
 
   def placementLogic() : Unit = {
-    if round.roundNum == 2 || round.roundNum == 4 then
+    if round.roundNum == 2 then
       if row.isMyTurn then
         val rower = nextInt(3)
         val colm = nextInt(3)
@@ -85,13 +85,10 @@ class computerLogic(computerBoard : Array[Array[Int]]) extends hasRow:
             if !allTrue(numExists(List(2))) then
               if row.isMyTurn then
               //check if another row is full somewhere or insert in a non-empty row
-                if !allTrue(numExists(List(7,0))) then
-                  board.bard(emptyRow)(nextInt(3)) = 2
-                  row.isMyTurn = false
                 if allTrue(numExists(List(7,0))) then //this is where there are two full rows above it
                   if emptyRow == 2 then //if the empty row is the last one, do some logic for vertical checking
                     for (colm <- 0 until 3) {
-                      if board.bard(2)(colm) == 0 then //only checks verticals if the current space is 0
+                      if board.bard(2)(colm) == 0 && board.bard(2)(colm) != 1 then //only checks verticals if the current space is 0
                         if board.bard(0)(colm) == 1 && board.bard(1)(colm) == 1 then
                           if row.isMyTurn then
                             board.bard(2)(colm) = 2 //if there is 2 ones above it, place one below them
@@ -103,14 +100,14 @@ class computerLogic(computerBoard : Array[Array[Int]]) extends hasRow:
                       if colm == 2 then //if we reach the end of the row and do not fill either one, we place at the first 0 we see
                         for (j <- 0 until 3) {
                           if row.isMyTurn then
-                            if board.bard(2)(j) == 0 then
+                            if board.bard(2)(j) == 0 && board.bard(2)(colm) != 1 then
                               board.bard(2)(j) = 2
                               row.isMyTurn = false
                         }
                     }
                   else if emptyRow == 1 then //if the empty row is the last one, do some logic for vertical checking
                     for (colm <- 0 until 3) {
-                      if board.bard(1)(colm) == 0 then //only checks verticals if the current space is 0
+                      if board.bard(1)(colm) == 0 && board.bard(1)(colm) != 1 then //only checks verticals if the current space is 0
                         if board.bard(0)(colm) == 1 && board.bard(2)(colm) == 1 then
                           if row.isMyTurn then
                             board.bard(1)(colm) = 2 //if there is 2 ones above it, place one below them
@@ -122,14 +119,14 @@ class computerLogic(computerBoard : Array[Array[Int]]) extends hasRow:
                       if colm == 2 then //if we reach the end of the row and do not fill either one, we place at the first 0 we see
                         for (j <- 0 until 3) {
                           if row.isMyTurn then
-                            if board.bard(1)(j) == 0 then
+                            if board.bard(1)(j) == 0 && board.bard(1)(colm) != 1 then
                               board.bard(1)(j) = 2
                               row.isMyTurn = false
                         }
                     }
                   else if emptyRow == 0 then //if the empty row is the last one, do some logic for vertical checking
                     for (colm <- 0 until 3) {
-                      if board.bard(0)(colm) == 0 then //only checks verticals if the current space is 0
+                      if board.bard(0)(colm) == 0 && board.bard(0)(colm) != 1 then //only checks verticals if the current space is 0
                         if board.bard(1)(colm) == 1 && board.bard(2)(colm) == 1 then
                           if row.isMyTurn then
                             board.bard(0)(colm) = 2 //if there is 2 ones above it, place one below them
@@ -141,12 +138,16 @@ class computerLogic(computerBoard : Array[Array[Int]]) extends hasRow:
                       if colm == 2 then //if we reach the end of the row and do not fill either one, we place at the first 0 we see
                         for (j <- 0 until 3) {
                           if row.isMyTurn then
-                            if board.bard(0)(j) == 0 then
+                            if board.bard(0)(j) == 0 && board.bard(0)(colm) != 1 then
                               board.bard(0)(j) = 2
                               row.isMyTurn = false
                         }
                     }
                   end if
+              if !allTrue(numExists(List(11, 0))) then
+                if row.isMyTurn then
+                  board.bard(emptyRow)(nextInt(3)) = 2
+                  row.isMyTurn = false
           case 10 =>
             if !allTrue(numExists(List(2))) then
               if row.isMyTurn then
@@ -169,13 +170,10 @@ class computerLogic(computerBoard : Array[Array[Int]]) extends hasRow:
             if !allTrue(numExists(List(2))) then
               if row.isMyTurn then
                 //check if another row is full somewhere or insert in a non-empty row
-                if !allTrue(numExists(List(11, 0))) then
-                  board.bard(emptyRow)(nextInt(3)) = 2
-                  row.isMyTurn = false
                 if allTrue(numExists(List(11, 0))) then //this is where there are two full rows above it
                   if emptyRow == 2 then //if the empty row is the last one, do some logic for vertical checking
                     for (colm <- 0 until 3) {
-                      if board.bard(2)(colm) == 0 then //only checks verticals if the current space is 0
+                      if board.bard(2)(colm) == 0 && board.bard(2)(colm) != 1 then //only checks verticals if the current space is 0
                         if board.bard(0)(colm) == 1 && board.bard(1)(colm) == 1 then
                           if row.isMyTurn then
                             board.bard(2)(colm) = 2 //if there is 2 ones above it, place one below them
@@ -187,14 +185,14 @@ class computerLogic(computerBoard : Array[Array[Int]]) extends hasRow:
                       if colm == 2 then //if we reach the end of the row and do not fill either one, we place at the first 0 we see
                         for (j <- 0 until 3) {
                           if row.isMyTurn then
-                            if board.bard(2)(j) == 0 then
+                            if board.bard(2)(j) == 0 && board.bard(2)(colm) != 1 then
                               board.bard(2)(j) = 2
                               row.isMyTurn = false
                         }
                     }
                   else if emptyRow == 1 then //if the empty row is the last one, do some logic for vertical checking
                     for (colm <- 0 until 3) {
-                      if board.bard(1)(colm) == 0 then //only checks verticals if the current space is 0
+                      if board.bard(1)(colm) == 0 && board.bard(1)(colm) != 1 then //only checks verticals if the current space is 0
                         if board.bard(0)(colm) == 1 && board.bard(2)(colm) == 1 then
                           if row.isMyTurn then
                             board.bard(1)(colm) = 2 //if there is 2 ones above it, place one below them
@@ -206,14 +204,14 @@ class computerLogic(computerBoard : Array[Array[Int]]) extends hasRow:
                       if colm == 2 then //if we reach the end of the row and do not fill either one, we place at the first 0 we see
                         for (j <- 0 until 3) {
                           if row.isMyTurn then
-                            if board.bard(1)(j) == 0 then
+                            if board.bard(1)(j) == 0 && board.bard(1)(colm) != 1 then
                               board.bard(1)(j) = 2
                               row.isMyTurn = false
                         }
                     }
                   else if emptyRow == 0 then //if the empty row is the last one, do some logic for vertical checking
                     for (colm <- 0 until 3) {
-                      if board.bard(0)(colm) == 0 then //only checks verticals if the current space is 0
+                      if board.bard(0)(colm) == 0 && board.bard(0)(colm) != 1 then //only checks verticals if the current space is 0
                         if board.bard(1)(colm) == 1 && board.bard(2)(colm) == 1 then
                           if row.isMyTurn then
                             board.bard(0)(colm) = 2 //if there is 2 ones above it, place one below them
@@ -225,12 +223,16 @@ class computerLogic(computerBoard : Array[Array[Int]]) extends hasRow:
                       if colm == 2 then //if we reach the end of the row and do not fill either one, we place at the first 0 we see
                         for (j <- 0 until 3) {
                           if row.isMyTurn then
-                            if board.bard(0)(j) == 0 then
+                            if board.bard(0)(j) == 0 && board.bard(0)(colm) != 1 then
                               board.bard(0)(j) = 2
                               row.isMyTurn = false
                         }
                     }
                   end if
+              if !allTrue(numExists(List(11, 0))) then
+                if row.isMyTurn then
+                  board.bard(emptyRow)(nextInt(3)) = 2
+                  row.isMyTurn = false
           case 5 =>
             if !allTrue(numExists(List(2))) then
               if row.isMyTurn then
