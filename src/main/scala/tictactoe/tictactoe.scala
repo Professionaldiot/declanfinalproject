@@ -3,23 +3,6 @@ package tictactoe
 import scala.language.postfixOps
 import scala.swing.*
 
-/*
-DONE: win detection
-SCRAPPED: get swing interacting with doodle using the contents +=
-DONE: add tie detection
-DONE: add states for buttons (meaning once you press one you can't press it again)
-DONE: add a quick reset button
-DONE: back and forth game play
-DONE: position selection using swing?
-DONE: we now have board visible for the player on the Frame
-DONE: playing against a computer
-DONE: remove twos from array when a computer is player 2
-
-using matrices' to hold positions (arrays of arrays of ints)
-numbers represent our player(1 and 2)
-
- */
-
 trait boardState :
   def currentState(board : Array[Array[Int]]) : Unit
 
@@ -224,6 +207,7 @@ def amComp() : Unit = {
         reactions += {
           case event.ButtonClicked(_) =>
             close()
+            round.againstComputer = false
             newButton()
         }
       }
@@ -241,6 +225,7 @@ object win :
     winner.vertical(board.bard)
     winner.diagonal(board.bard)
     if !round.againstComputer then
+      newButton()
       if round.tieChecker then println("There is a tie, no one won.")
   }
 
@@ -295,6 +280,7 @@ object winner :
       }
     }
   }
+
   def diagonal(board : Array[Array[Int]]): Unit = {
     if board(0)(0) == board(1)(1) && board(0)(0) == board(2)(2) then
       if board(0)(0) == 0 then
@@ -328,6 +314,7 @@ object round :
   var roundNum : Int = 0
   var tieCounter : Int = 0
   var againstComputer = false
+
   def nextRound = {
     if againstComputer then
       roundNum += 1
@@ -345,9 +332,11 @@ object round :
       else
         player = 1
   }
+
   def check(player : Int) : Int = {
     this.player
   }
+
   def tieChecker  : Boolean = {
     if roundNum == 9 then
       if tieCounter >= 0 then true

@@ -43,6 +43,7 @@ class computerLogic(computerBoard : Array[Array[Int]]) extends hasRow:
     else
       findPlacement()
   }
+
   private def numExists(numsToCheck : List[Int]) : ListBuffer[Boolean] = {
     val boolList = ListBuffer[Boolean]()
     for elem <- numsToCheck do
@@ -67,6 +68,7 @@ class computerLogic(computerBoard : Array[Array[Int]]) extends hasRow:
       rowToRep = 3
     rowToRep
   }
+  
   private def whichRow(numToFind : Int) : Int = {
     var rowHasNum = -1
     for (elem <- 0 until 3) {
@@ -75,6 +77,7 @@ class computerLogic(computerBoard : Array[Array[Int]]) extends hasRow:
     }
     rowHasNum
   }
+  
   override def findPlacement(): Unit ={
     //DONE: convert rowToReplace to match cases
     //cases = 11,10,7,5,2,1,0,_
@@ -260,10 +263,17 @@ class computerLogic(computerBoard : Array[Array[Int]]) extends hasRow:
             if row.isMyTurn then
               //replace with no checks
               for (colm <- 0 until 3) {
-                if board.bard(whichRow(2))(colm) == 0 then
+                if board.bard(whichRow(2))(colm) == 0 && board.bard(whichRow(2))(colm) != 2 then
                   if row.isMyTurn then
                     board.bard(whichRow(2))(colm) = 2
                     row.isMyTurn = false
+                  end if
+                else
+                  if row.isMyTurn  then
+                    if board.bard(emptyRow-1)(colm) == 1 && board.bard(emptyRow-2)(colm) == 1 then
+                      if board.bard(emptyRow)(colm) == 0 then
+                        board.bard(emptyRow)(colm) = 2
+                        row.isMyTurn = false
               }
           case 1 =>
             if !allTrue(numExists(List(2))) then

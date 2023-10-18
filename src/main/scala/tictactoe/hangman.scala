@@ -10,22 +10,6 @@ import scala.swing.*
 import scala.util.Random.*
 import scala.util.control.Breaks.*
 
-/*
-DONE: add a button GUI for user vs computer or another user
-DONE: add GUI for main screen to avoid a lot of console inputs
-DONE: word state trait
-DONE: get user inputted text on screen to the swing Frame
-DONE: using a case class and vector, randomly select a word
-SCRAPPED: use swing to type user input in a box and check whether it's the correct word or not
-DONE: get wrong letters written to swing Frame
-SCRAPPED: add a way to update the man according to whether the letter was right or wrong
-DONE: win detection
-DONE: loss detection
-DONE: remove deprecated methods, traits and vals
-DONE: using word.setLetters fill in the blank letters if they are right
-DONE: add the functionality for checking whether the previous word is the same as the current word
- */
-
 object prev :
   var word = ""
 
@@ -37,7 +21,7 @@ def getNewerWord : Vector[newWord] = {
     newWord("hello world"),
     newWord("hangman in scala"),
     newWord("christmas"),
-    newWord("copmuter science"),
+    newWord("computer science"),
     newWord("data"),
     newWord("programming"),
     newWord("coding"),
@@ -94,9 +78,11 @@ object word :
     game.round = 0
     open.orElse = 0
   }
+
   def copyArray() : Unit = {
     for elem <- underscoredWord do if elem != ' ' then underscoreArray += elem
   }
+
   def toArray(word : String) : Any = {
     for i <- word do
       userArray += i
@@ -107,6 +93,7 @@ object word :
     for elem <- wrongLetters do wrongString += f"${elem}, "
     wrongString
   }
+
   def setLetters(userArray : ArrayBuffer[Char], charsToAdd : String, indexToAddCharsAt: Int): ArrayBuffer[Char] = {
     val lettersArray = charsToAdd.toList
     lettersArray.zipWithIndex.foreach {
@@ -161,6 +148,7 @@ object guess :
       }
     else wordBool = false
   }
+
 object wind :
   var bool = false
   var stringCheck = ""
@@ -176,26 +164,28 @@ object wind :
       if elem != '\u003E' && elem != '\'' && elem != '\u002C' then
         stringCheck += elem
   }
+
 object open :
   var orElse : Int = 0
+
 def newText() : Unit = {
   wind.arrayToString
   if wind.stringCheck == guess.correctWord then
     println("You did it! you have guessed the correct word")
   if guess.correctWord == game.guessNew then
-    println(f"you did it! you got ${guess.correctWord} in ${game.round} rounds!")
+    println(f"you did it! you got ${guess.correctWord} in ${game.round-1} rounds!")
   else if open.orElse >= 1 then
     run()
   open.orElse += 1
   if game.round == game.maxRounds then
-    println(f"you did not find the word ${guess.correctWord} in ${game.round} rounds")
+    println(f"you did not find the word ${guess.correctWord} in ${game.round-1} rounds")
   else
     new Frame() {
       title = "HANGMAN"
       preferredSize = new Dimension(500, 500)
       contents = new GridPanel(7, 5) {
         contents += new TextField("Type your guess in the console, use the button to start the check...", 25)
-        contents += new TextField(word.underscoreArray.toString().substring(12,word.underscoreArray.length*3 + 10))
+        contents += new TextField(word.underscoreArray.toString().substring(12,word.underscoreArray.length*3 + 10))//this converts the array to a string that we put on the screen
         contents += new TextField(word.wrongLettersToString())
         contents += new ToggleButton("I think I have guessed the word!") {
           reactions += {
@@ -285,12 +275,14 @@ object game :
     round += 1
     round
   }
+
   def getNewWord : Any = {
     println("Type your word in the console below this.")
     val word = readLine()
     guess.correctWord = word
 
   }
+
   def newGuess() : Unit = {
     println("Type your guess below")
     val userGuess = readLine()
@@ -299,11 +291,13 @@ object game :
     guess.newUserGuess = userChar
     guessNew = userGuess
   }
+
   def nextRound : Unit= {
     word.toArray(guess.correctWord)
     word.toUnderscores(word.userArray)
     word.copyArray()
   }
+
   def compLogic(compWord : String) : Unit = {
     guess.correctWord = compWord
     nextRound
